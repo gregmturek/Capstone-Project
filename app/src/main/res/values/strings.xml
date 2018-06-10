@@ -2,8 +2,18 @@
     <string name="app_name">Casa Las Glorias</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Kent Millsap</string>
+    <string name="nav_header_subtitle">kent@casalasglorias.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_call">Call</string>
+    <string name="action_place">Locate</string>
+    <string name="dialog_search_message">What sounds good?</string>
+    <string name="hint_keyword">shrimp, cheese, guacamole, ...</string>
+    <string name="dialog_search_title">Search</string>
+    <string name="button_search">OK</string>
+    <string name="button_cancel">Cancel</string>
+
+    <string name="title_activity_catering">CateringActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
