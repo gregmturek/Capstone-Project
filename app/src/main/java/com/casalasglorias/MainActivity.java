@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -90,12 +91,13 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-/*
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_dial) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+            intent.setData(Uri.parse(getString(R.string.phone_number)));
+            startActivity(intent);
             return true;
         }
-*/
 
         return super.onOptionsItemSelected(item);
     }

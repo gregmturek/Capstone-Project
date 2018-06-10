@@ -5,7 +5,7 @@
     <string name="nav_header_title">Kent Millsap</string>
     <string name="nav_header_subtitle">kent@casalasglorias.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_call">Call</string>
+    <string name="action_dial">Call</string>
     <string name="action_place">Locate</string>
     <string name="dialog_search_message">What sounds good?</string>
     <string name="hint_keyword">shrimp, cheese, guacamole, ...</string>
@@ -16,4 +16,6 @@
     <string name="title_activity_catering">CateringActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="phone_number">tel:+13192942101</string>
 </resources>
