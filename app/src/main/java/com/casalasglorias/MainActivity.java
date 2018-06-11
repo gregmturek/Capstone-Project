@@ -91,12 +91,22 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_dial) {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-            intent.setData(Uri.parse(getString(R.string.phone_number)));
-            startActivity(intent);
-            return true;
+        switch(id) {
+            case R.id.action_dial:
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                dialIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+                dialIntent.setData(Uri.parse(getString(R.string.phone_number)));
+                if (dialIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(dialIntent);
+                }
+                return true;
+            case R.id.action_place:
+                Uri mapUri = Uri.parse(getString(R.string.map_uri));
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, mapUri);
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                }
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

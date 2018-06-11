@@ -6,4 +6,10 @@
         android:title="@string/action_dial"
         android:icon="@drawable/ic_call_white_24dp"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_place"
+        android:title="@string/action_place"
+        android:icon="@drawable/ic_place_white_24dp"
+        app:showAsAction="ifRoom" />
 </menu>
