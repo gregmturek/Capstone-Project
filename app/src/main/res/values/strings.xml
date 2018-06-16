@@ -2,8 +2,8 @@
     <string name="app_name">Casa Las Glorias</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Kent Millsap</string>
-    <string name="nav_header_subtitle">kent@casalasglorias.com</string>
+    <string name="nav_header_name">Guest</string>
+    <string name="nav_header_email">not@signed.in</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_dial">Call</string>
     <string name="action_place">Locate</string>
@@ -19,4 +19,14 @@
 
     <string name="phone_number">tel:+13192942101</string>
     <string name="map_uri">geo:42.0342682,-91.6762866?q=Casa+Las+Glorias</string>
+
+    <string name="navigation_menu_sign_out">Sign Out</string>
+    <string name="navigation_menu_sign_in">Sign In</string>
+
+    <string name="main_content_text_view">¡Hola!</string>
+    <string name="main_content_text_view_format">¡Hola %1$s!</string>
+
+    <string name="sign_in_failure">Unable to sign in</string>
+    <string name="no_internet_connection">No internet connection</string>
+
 </resources>

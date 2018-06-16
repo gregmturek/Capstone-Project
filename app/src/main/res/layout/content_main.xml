@@ -19,7 +19,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:text="¡Hola Kent!" />
+        android:text="@string/main_content_text_view" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/main_content_card_view"

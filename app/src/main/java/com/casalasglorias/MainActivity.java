@@ -20,14 +20,20 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -36,9 +42,20 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    NavigationView mNavigationView;
+    ImageView mNavHeaderImageImageView;
+    TextView mNavHeaderNameTextView, mNavHeaderEmailTextView, mMainContentTextView;
+
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final int RC_SIGN_IN = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +78,21 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_home);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+        mNavigationView = findViewById(R.id.nav_view);
+        View headerView = mNavigationView.getHeaderView(0);
+        mNavHeaderImageImageView = headerView.findViewById(R.id.nav_header_image);
+        mNavHeaderNameTextView = headerView.findViewById(R.id.nav_header_name);
+        mNavHeaderEmailTextView = headerView.findViewById(R.id.nav_header_email);
+        mMainContentTextView = findViewById(R.id.main_content_text_view);
+
+        mNavigationView.setNavigationItemSelectedListener(this);
+        mNavigationView.setCheckedItem(R.id.nav_home);
+        mNavigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            afterSignedIn(user);
+        }
     }
 
     @Override
@@ -119,7 +147,7 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id != R.id.nav_log) {
+        if (id != R.id.nav_sign) {
             ConstraintLayout mainContent = findViewById(R.id.main_content);
             NestedScrollView menuContent = findViewById(R.id.menu_content);
             LinearLayout cateringContent = findViewById(R.id.catering_content);
@@ -171,11 +199,104 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
             }
+        } else {
+            if (mNavigationView.getMenu().findItem(R.id.nav_sign).getTitle()
+                    .equals(getString(R.string.navigation_menu_sign_in))) {
+                signIn();
+            } else {
+                signOut();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void signIn() {
+        List<AuthUI.IdpConfig> providers = Collections.singletonList(
+                new AuthUI.IdpConfig.GoogleBuilder().build());
+
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .build(),
+                RC_SIGN_IN);
+    }
+
+    private void signOut() {
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(task -> afterSignedOut());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    afterSignedIn(user);
+                } else {
+                    // Proceed as if sign-in failed
+                    signOut();
+                    showSnackbar(R.string.sign_in_failure);
+                }
+            } else {
+                // Sign-in failed
+
+                Log.e(LOG_TAG, "Sign-in error: ", response != null ? response.getError() : null);
+
+                if (response != null) {
+                    if (response.getError() != null) {
+                        if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+                            showSnackbar(R.string.no_internet_connection);
+                            return;
+                        }
+                    }
+                }
+
+                showSnackbar(R.string.sign_in_failure);
+            }
+        }
+    }
+
+    private void showSnackbar(int resId) {
+        Snackbar.make(getWindow().getDecorView().getRootView(), resId, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void afterSignedIn(FirebaseUser user) {
+        mNavigationView.getMenu().findItem(R.id.nav_sign).setTitle(R.string.navigation_menu_sign_out);
+
+        Uri uri = user.getPhotoUrl();
+        GlideApp.with(this)
+                .load(uri)
+                .into(mNavHeaderImageImageView);
+
+        mNavHeaderNameTextView.setText(user.getDisplayName());
+        mNavHeaderEmailTextView.setText(user.getEmail());
+
+        String formattedString = String.format(getString(R.string.main_content_text_view_format),
+                user.getDisplayName());
+        mMainContentTextView.setText(formattedString);
+    }
+
+    private void afterSignedOut() {
+        mNavigationView.getMenu().findItem(R.id.nav_sign).setTitle(R.string.navigation_menu_sign_in);
+
+        mNavHeaderImageImageView.setImageDrawable(getDrawable(R.drawable.ic_account_circle_black_24dp));
+
+        mNavHeaderNameTextView.setText(getString(R.string.nav_header_name));
+        mNavHeaderEmailTextView.setText(getString(R.string.nav_header_email));
+
+        mMainContentTextView.setText(getString(R.string.main_content_text_view));
     }
 
     public static class SearchDialogFragment extends DialogFragment {
