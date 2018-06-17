@@ -25,8 +25,24 @@
 
     <string name="main_content_text_view">¡Hola!</string>
     <string name="main_content_text_view_format">¡Hola %1$s!</string>
+    <string name="main_content_web_view_url">http://www.casalasglorias.com/home.html</string>
 
     <string name="sign_in_failure">Unable to sign in</string>
     <string name="no_internet_connection">No internet connection</string>
+
+    <string name="html_content_unavailable"><![CDATA[
+    <html>
+    <head>
+    <style>
+    h3 {text-align:center;}
+    p {text-align:center;}
+    </style>
+    </head>
+    <body>
+    <h3>Content not available</h3>
+    <p>Please check your internet connection.</p
+    </body>
+    </html>
+    ]]></string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.casalasglorias;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,7 +26,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +49,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,6 +61,8 @@ public class MainActivity extends AppCompatActivity
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 123;
+
+    private static String mModifiedWebView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,8 +170,7 @@ public class MainActivity extends AppCompatActivity
 
             if (id == R.id.nav_home) {
                 mainContent.setVisibility(View.VISIBLE);
-                WebView webView = findViewById(R.id.main_content_web_view);
-                webView.loadUrl("http://www.casalasglorias.com/home.html");
+                loadWebView();
             } else if (id == R.id.nav_menu) {
                 menuContent.setVisibility(View.VISIBLE);
                 floatingActionButton.setVisibility(View.VISIBLE);
@@ -211,6 +217,69 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void loadWebView(){
+        WebView webView = findViewById(R.id.main_content_web_view);
+
+        webView.getSettings().setJavaScriptEnabled(true);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+                if (url.equals(getString(R.string.main_content_web_view_url))) {
+                    view.evaluateJavascript("javascript:(function() { " +
+                            "document.getElementById('mobile-site-view')" +
+                            ".style.paddingTop=\"0px\"; " +
+                            "})()", value -> {});
+                    view.evaluateJavascript("javascript:(function() { " +
+                            "document.getElementsByClassName('clearfix mobile-menu')[0]" +
+                            ".style.display=\"none\"; " +
+                            "})()", value -> {});
+                    view.evaluateJavascript("javascript:(function() { " +
+                            "document.getElementById('wsb-element-53eb9b54-59e9-48af-94bc-1556b6a31c9f')" +
+                            ".style.display=\"none\"; " +
+                            "})()", value -> {});
+                    view.evaluateJavascript("javascript:(function() { " +
+                            "document.getElementsByClassName('view-as-desktop')[0]" +
+                            ".style.display=\"none\"; " +
+                            "})()", value -> {});
+
+                    view.saveWebArchive(getBaseContext().getCacheDir().getPath() +
+                                    File.separator +
+                                    "home.mht",
+                            false,
+                            value -> mModifiedWebView = value);
+
+                    view.setVisibility(View.VISIBLE);
+                } else if (url.endsWith(getString(R.string.html_content_unavailable))) {
+                    mModifiedWebView = null;
+                }
+
+                view.getSettings().setJavaScriptEnabled(false);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                view.loadData(getString(R.string.html_content_unavailable), "text/html", null);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return true;
+            }
+        });
+
+        if (mModifiedWebView == null) {
+            webView.setVisibility(View.INVISIBLE);
+            webView.loadUrl(getString(R.string.main_content_web_view_url));
+        } else {
+            String url = "file://" + mModifiedWebView;
+            webView.loadUrl(url);
+        }
     }
 
     private void signIn() {
