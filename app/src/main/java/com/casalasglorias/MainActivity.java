@@ -4,9 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -39,14 +42,19 @@ import android.widget.TextView;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -183,26 +191,7 @@ public class MainActivity extends AppCompatActivity
                 }
             } else if (id == R.id.nav_find) {
                 findContent.setVisibility(View.VISIBLE);
-                MapFragment mapFragment = (MapFragment) getFragmentManager()
-                        .findFragmentById(R.id.map);
-                mapFragment.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        LatLng latLng = new LatLng(42.0218595, -91.6577232);
-                        googleMap.addMarker(new MarkerOptions().position(latLng)).setTitle("You're still here!");
-
-                        Bitmap bitmap= BitmapFactory.decodeResource(getResources(),
-                                R.drawable.casalasglorias_pin);
-                        bitmap.setHasAlpha(true);
-                        bitmap = Bitmap.createScaledBitmap(bitmap, 256, 256, true);
-                        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(bitmap);
-
-                        latLng = new LatLng(42.0342642, -91.6740979);
-                        googleMap.addMarker(new MarkerOptions().position(latLng)
-                                .icon(bitmapDescriptor)).setAnchor(0.5f,1f);
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    }
-                });
+                tryToShowMap();
             }
         } else {
             if (mNavigationView.getMenu().findItem(R.id.nav_sign).getTitle()
@@ -321,6 +310,95 @@ public class MainActivity extends AppCompatActivity
 
         webView.setInitialScale(1);
         webView.loadUrl(getString(R.string.catering_content_web_view_url));
+    }
+
+    public void tryToShowMap(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    showRationaleAndRequestPermission();
+                } else {
+                    requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                            123);
+                }
+            } else {
+                startMap(true);
+            }
+        } else {
+            startMap(true);
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private void showRationaleAndRequestPermission() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(R.string.dialog_permission_title)
+                .setMessage(R.string.dialog_permission_message)
+                .setPositiveButton(R.string.button_ok, (dialog, id) -> requestPermissions(
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 123))
+                .create()
+                .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 123) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startMap(true);
+            } else {
+                startMap(false);
+            }
+        }
+    }
+
+    private void startMap(boolean locationPermission) {
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        FusedLocationProviderClient fusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(this);
+        mapFragment.getMapAsync(googleMap -> {
+            if (locationPermission) {
+                @SuppressLint("MissingPermission") Task<Location> task = fusedLocationProviderClient.
+                        getLastLocation();
+                task.addOnCompleteListener(task1 -> {
+                    if (task.isSuccessful()) {
+                        Location location = task.getResult();
+                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        Marker currentMarker = googleMap.addMarker(new MarkerOptions().position(latLng));
+                        currentMarker.setTitle(getString(R.string.marker_current_title));
+                        finishMap(googleMap, currentMarker);
+                    }
+                });
+            } else {
+                finishMap(googleMap, null);
+            }
+        });
+    }
+
+    private void finishMap(GoogleMap googleMap, Marker currentMarker) {
+        Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.this.getResources(),
+                R.drawable.casalasglorias_pin);
+        bitmap.setHasAlpha(true);
+        bitmap = Bitmap.createScaledBitmap(bitmap, 256, 256, true);
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(bitmap);
+
+        LatLng latLng = new LatLng(42.0342642, -91.6740979);
+        Marker restaurantMarker = googleMap.addMarker(new MarkerOptions().position(latLng)
+                .icon(bitmapDescriptor));
+        restaurantMarker.setAnchor(0.5f, 1f);
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(restaurantMarker.getPosition());
+        if (currentMarker != null) {
+            builder.include(currentMarker.getPosition());
+        }
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(builder.build(), 192);
+        googleMap.moveCamera(cameraUpdate);
     }
 
     private void signIn() {

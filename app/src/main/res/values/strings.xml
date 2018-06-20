@@ -42,5 +42,10 @@
     ]]></string>
 
     <string name="catering_content_web_view_url"><![CDATA[http://nebula.wsimg.com/81051df656d8da187c32506104d122ed?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
+    <string name="dialog_permission_title">Location Permission</string>
+    <string name="dialog_permission_message">If you want this app to show your location on the map, allow it to access this devices location when asked.</string>
+    <string name="button_ok">OK</string>
+
+    <string name="marker_current_title">You\'re still here!</string>
 
 </resources>
