@@ -1,36 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/catering_content"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/catering_content_card_view"
+    <WebView
+        android:id="@+id/catering_content_web_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_height="match_parent" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/catering"
-            android:adjustViewBounds="true" />
-
-    </android.support.v7.widget.CardView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_gravity="center_horizontal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:text="(Tap the brochure to get a closer look!)" />
-
-</LinearLayout>
+</FrameLayout>

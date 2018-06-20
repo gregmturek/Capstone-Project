@@ -13,10 +13,6 @@
     <string name="button_search">OK</string>
     <string name="button_cancel">Cancel</string>
 
-    <string name="title_activity_catering">CateringActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-
     <string name="phone_number">tel:+13192942101</string>
     <string name="map_uri">geo:42.0342682,-91.6762866?q=Casa+Las+Glorias</string>
 
@@ -44,5 +40,7 @@
     </body>
     </html>
     ]]></string>
+
+    <string name="catering_content_web_view_url"><![CDATA[http://nebula.wsimg.com/81051df656d8da187c32506104d122ed?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
 
 </resources>

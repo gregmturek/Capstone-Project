@@ -28,11 +28,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
@@ -62,7 +63,8 @@ public class MainActivity extends AppCompatActivity
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 123;
 
-    private static String mModifiedWebView = null;
+    private static String mModifiedHomeWebView = null;
+    private static boolean mCateringWebViewLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +159,7 @@ public class MainActivity extends AppCompatActivity
         if (id != R.id.nav_sign) {
             ConstraintLayout mainContent = findViewById(R.id.main_content);
             NestedScrollView menuContent = findViewById(R.id.menu_content);
-            LinearLayout cateringContent = findViewById(R.id.catering_content);
+            FrameLayout cateringContent = findViewById(R.id.catering_content);
             ConstraintLayout findContent = findViewById(R.id.find_content);
 
             FloatingActionButton floatingActionButton = findViewById(R.id.fab);
@@ -170,18 +172,15 @@ public class MainActivity extends AppCompatActivity
 
             if (id == R.id.nav_home) {
                 mainContent.setVisibility(View.VISIBLE);
-                loadWebView();
+                loadHomeWebView();
             } else if (id == R.id.nav_menu) {
                 menuContent.setVisibility(View.VISIBLE);
                 floatingActionButton.setVisibility(View.VISIBLE);
             } else if (id == R.id.nav_catering) {
                 cateringContent.setVisibility(View.VISIBLE);
-                findViewById(R.id.catering_content_card_view).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(v.getContext(), CateringActivity.class));
-                    }
-                });
+                if (!mCateringWebViewLoaded) {
+                    loadCateringWebView();
+                }
             } else if (id == R.id.nav_find) {
                 findContent.setVisibility(View.VISIBLE);
                 MapFragment mapFragment = (MapFragment) getFragmentManager()
@@ -220,7 +219,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private void loadWebView(){
+    private void loadHomeWebView(){
         WebView webView = findViewById(R.id.main_content_web_view);
 
         webView.getSettings().setJavaScriptEnabled(true);
@@ -251,11 +250,11 @@ public class MainActivity extends AppCompatActivity
                                     File.separator +
                                     "home.mht",
                             false,
-                            value -> mModifiedWebView = value);
+                            value -> mModifiedHomeWebView = value);
 
                     view.setVisibility(View.VISIBLE);
                 } else if (url.endsWith(getString(R.string.html_content_unavailable))) {
-                    mModifiedWebView = null;
+                    mModifiedHomeWebView = null;
                 }
 
                 view.getSettings().setJavaScriptEnabled(false);
@@ -273,13 +272,55 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        if (mModifiedWebView == null) {
+        if (mModifiedHomeWebView == null) {
             webView.setVisibility(View.INVISIBLE);
             webView.loadUrl(getString(R.string.main_content_web_view_url));
         } else {
-            String url = "file://" + mModifiedWebView;
+            String url = "file://" + mModifiedHomeWebView;
             webView.loadUrl(url);
         }
+    }
+
+    private void loadCateringWebView() {
+        WebView webView = findViewById(R.id.catering_content_web_view);
+        WebSettings webSettings = webView.getSettings();
+
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setAppCachePath(getBaseContext().getCacheDir().getPath());
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webSettings.setAppCacheEnabled(true);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+                if (url.equals(getString(R.string.catering_content_web_view_url))) {
+                    mCateringWebViewLoaded = true;
+                } else if (url.endsWith(getString(R.string.html_content_unavailable))) {
+                    mCateringWebViewLoaded = false;
+                }
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+
+                WebSettings webSettings1 = view.getSettings();
+                webSettings1.setSupportZoom(false);
+                webSettings1.setBuiltInZoomControls(false);
+                webSettings1.setUseWideViewPort(false);
+                webSettings1.setLoadWithOverviewMode(false);
+
+                view.setInitialScale(0);
+                view.loadData(getString(R.string.html_content_unavailable), "text/html", null);
+            }
+        });
+
+        webView.setInitialScale(1);
+        webView.loadUrl(getString(R.string.catering_content_web_view_url));
     }
 
     private void signIn() {

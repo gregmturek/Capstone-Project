@@ -28,16 +28,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/MyCasaLasGloriasGoogleMapsKey" />
 
-        <activity
-            android:name=".CateringActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_catering"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/FullscreenTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.casalasglorias.MainActivity" />
-        </activity>
     </application>
 
 </manifest>
