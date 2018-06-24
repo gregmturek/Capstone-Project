@@ -48,50 +48,59 @@
                     android:orientation="vertical">
 
                     <CheckBox
+                        android:id="@+id/box_0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select All"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Salads"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Enchiladas"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Burritos &amp; Wraps"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fajitas &amp; Steaks"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Specialties"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mariscos"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Combinations"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chimichangas"/>
+                        android:checked="true"/>
 
                 </LinearLayout>
 
@@ -101,49 +110,58 @@
                     android:orientation="vertical">
 
                     <CheckBox
+                        android:id="@+id/box_9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Quesadillas"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pepe's Platters"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Burgers &amp; Sandwiches"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Lunch"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Appetizers"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dips For Your Chips"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_15"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Extras"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Beverages"/>
+                        android:checked="true"/>
 
                     <CheckBox
+                        android:id="@+id/box_17"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Desserts"/>
+                        android:checked="true"/>
 
                 </LinearLayout>
 

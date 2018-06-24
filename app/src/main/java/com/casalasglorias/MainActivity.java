@@ -1,14 +1,15 @@
 package com.casalasglorias;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +36,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -57,22 +61,41 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
+import java.text.Normalizer;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    FloatingActionButton mFab;
+
     NavigationView mNavigationView;
     ImageView mNavHeaderImageImageView;
     TextView mNavHeaderNameTextView, mNavHeaderEmailTextView, mMainContentTextView;
+
+    CardView mSaladsCardView, mEnchiladasCardView, mBurritosAndWrapsCardView, mFajitasAndSteaksCardView,
+            mSpecialtiesCardView;
+    TextView mSaladsTextView, mEnchiladasTextView, mBurritosAndWrapsTextView, mFajitasAndSteaksTextView,
+            mSpecialtiesTextView;
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 123;
 
     private static String mModifiedHomeWebView = null;
     private static boolean mCateringWebViewLoaded = false;
+
+    RestaurantMenuData mRestaurantMenuData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +104,13 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        mFab = findViewById(R.id.fab);
+        mFab.setTag(true);
+        mFab.setOnClickListener(view -> {
+            if (mFab.getTag().equals(true)) {
                 new SearchDialogFragment().show(getSupportFragmentManager(), "SearchDialog");
+            } else {
+                updateFab();
             }
         });
 
@@ -102,6 +127,18 @@ public class MainActivity extends AppCompatActivity
         mNavHeaderEmailTextView = headerView.findViewById(R.id.nav_header_email);
         mMainContentTextView = findViewById(R.id.main_content_text_view);
 
+        mSaladsCardView = findViewById(R.id.salads);
+        mEnchiladasCardView = findViewById(R.id.enchiladas);
+        mBurritosAndWrapsCardView = findViewById(R.id.burritos_and_wraps);
+        mFajitasAndSteaksCardView = findViewById(R.id.fajitas_and_steaks);
+        mSpecialtiesCardView = findViewById(R.id.specialties);
+
+        mSaladsTextView = findViewById(R.id.salads_results);
+        mEnchiladasTextView = findViewById(R.id.enchiladas_results);
+        mBurritosAndWrapsTextView = findViewById(R.id.burritos_and_wraps_results);
+        mFajitasAndSteaksTextView = findViewById(R.id.fajitas_and_steaks_results);
+        mSpecialtiesTextView = findViewById(R.id.specialties_results);
+
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(R.id.nav_home);
         mNavigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
@@ -109,6 +146,52 @@ public class MainActivity extends AppCompatActivity
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             afterSignedIn(user);
+        }
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 mRestaurantMenuData = dataSnapshot.getValue(RestaurantMenuData.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(LOG_TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    private void updateFab() {
+        if (mFab.getTag().equals(true)) {
+            mFab.setImageDrawable(getDrawable(R.drawable.ic_undo_white_24dp));
+            mFab.setTag(false);
+
+            mSaladsCardView.setVisibility(View.GONE);
+            mEnchiladasCardView.setVisibility(View.GONE);
+            mBurritosAndWrapsCardView.setVisibility(View.GONE);
+            mFajitasAndSteaksCardView.setVisibility(View.GONE);
+            mSpecialtiesCardView.setVisibility(View.GONE);
+        } else {
+            mFab.setImageDrawable(getDrawable(R.drawable.ic_search_white_24dp));
+            mFab.setTag(true);
+
+            mSaladsCardView.setVisibility(View.VISIBLE);
+            mEnchiladasCardView.setVisibility(View.VISIBLE);
+            mBurritosAndWrapsCardView.setVisibility(View.VISIBLE);
+            mFajitasAndSteaksCardView.setVisibility(View.VISIBLE);
+            mSpecialtiesCardView.setVisibility(View.VISIBLE);
+
+            mSaladsTextView.setText(null);
+            mSaladsTextView.setVisibility(View.GONE);
+            mEnchiladasTextView.setText(null);
+            mEnchiladasTextView.setVisibility(View.GONE);
+            mBurritosAndWrapsTextView.setText(null);
+            mBurritosAndWrapsTextView.setVisibility(View.GONE);
+            mFajitasAndSteaksTextView.setText(null);
+            mFajitasAndSteaksTextView.setVisibility(View.GONE);
+            mSpecialtiesTextView.setText(null);
+            mSpecialtiesTextView.setVisibility(View.GONE);
         }
     }
 
@@ -184,6 +267,7 @@ public class MainActivity extends AppCompatActivity
             } else if (id == R.id.nav_menu) {
                 menuContent.setVisibility(View.VISIBLE);
                 floatingActionButton.setVisibility(View.VISIBLE);
+                loadMenuImages();
             } else if (id == R.id.nav_catering) {
                 cateringContent.setVisibility(View.VISIBLE);
                 if (!mCateringWebViewLoaded) {
@@ -268,6 +352,38 @@ public class MainActivity extends AppCompatActivity
             String url = "file://" + mModifiedHomeWebView;
             webView.loadUrl(url);
         }
+    }
+
+    private void loadMenuImages() {
+        Uri saladsUri = Uri.parse(getString(R.string.menu_content_salads_url));
+        ImageView saladsImageView = findViewById(R.id.salads_image);
+        GlideApp.with(this)
+                .load(saladsUri)
+                .into(saladsImageView);
+
+        Uri enchiladasUri = Uri.parse(getString(R.string.menu_content_enchiladas_url));
+        ImageView enchiladasImageView = findViewById(R.id.enchiladas_image);
+        GlideApp.with(this)
+                .load(enchiladasUri)
+                .into(enchiladasImageView);
+
+        Uri burritosAndWrapsUri = Uri.parse(getString(R.string.menu_content_burritosAndWraps_url));
+        ImageView burritosAndWrapsImageView = findViewById(R.id.burritos_and_wraps_image);
+        GlideApp.with(this)
+                .load(burritosAndWrapsUri)
+                .into(burritosAndWrapsImageView);
+
+        Uri fajitasAndSteaksUri = Uri.parse(getString(R.string.menu_content_fajitasAndSteaks_url));
+        ImageView fajitasAndSteaksImageView = findViewById(R.id.fajitas_and_steaks_image);
+        GlideApp.with(this)
+                .load(fajitasAndSteaksUri)
+                .into(fajitasAndSteaksImageView);
+
+        Uri specialtiesUri = Uri.parse(getString(R.string.menu_content_specialties_url));
+        ImageView specialtiesImageView = findViewById(R.id.specialties_image);
+        GlideApp.with(this)
+                .load(specialtiesUri)
+                .into(specialtiesImageView);
     }
 
     private void loadCateringWebView() {
@@ -460,6 +576,10 @@ public class MainActivity extends AppCompatActivity
         Snackbar.make(getWindow().getDecorView().getRootView(), resId, Snackbar.LENGTH_LONG).show();
     }
 
+    private void showSnackbar(View view, int resId) {
+        Snackbar.make(view, resId, Snackbar.LENGTH_LONG).show();
+    }
+
     private void afterSignedIn(FirebaseUser user) {
         mNavigationView.getMenu().findItem(R.id.nav_sign).setTitle(R.string.navigation_menu_sign_out);
 
@@ -488,31 +608,274 @@ public class MainActivity extends AppCompatActivity
     }
 
     public static class SearchDialogFragment extends DialogFragment {
+        @SuppressLint("InflateParams")
         @Override
         @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            LayoutInflater layoutInflater = getActivity().getLayoutInflater();
+            Activity activity = requireActivity();
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
-            builder.setView(layoutInflater.inflate(R.layout.dialog_search, null))
+            LayoutInflater layoutInflater = activity.getLayoutInflater();
+            View view = layoutInflater.inflate(R.layout.dialog_search, null);
+
+            CheckBox box0 = view.findViewById(R.id.box_0);
+            CheckBox box1 = view.findViewById(R.id.box_1);
+            CheckBox box2 = view.findViewById(R.id.box_2);
+            CheckBox box3 = view.findViewById(R.id.box_3);
+            CheckBox box4 = view.findViewById(R.id.box_4);
+            CheckBox box5 = view.findViewById(R.id.box_5);
+            CheckBox box6 = view.findViewById(R.id.box_6);
+            CheckBox box7 = view.findViewById(R.id.box_7);
+            CheckBox box8 = view.findViewById(R.id.box_8);
+            CheckBox box9 = view.findViewById(R.id.box_9);
+            CheckBox box10 = view.findViewById(R.id.box_10);
+            CheckBox box11 = view.findViewById(R.id.box_11);
+            CheckBox box12 = view.findViewById(R.id.box_12);
+            CheckBox box13 = view.findViewById(R.id.box_13);
+            CheckBox box14 = view.findViewById(R.id.box_14);
+            CheckBox box15 = view.findViewById(R.id.box_15);
+            CheckBox box16 = view.findViewById(R.id.box_16);
+            CheckBox box17 = view.findViewById(R.id.box_17);
+
+            box0.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                box1.setChecked(isChecked);
+                box2.setChecked(isChecked);
+                box3.setChecked(isChecked);
+                box4.setChecked(isChecked);
+                box5.setChecked(isChecked);
+                box6.setChecked(isChecked);
+                box7.setChecked(isChecked);
+                box8.setChecked(isChecked);
+                box9.setChecked(isChecked);
+                box10.setChecked(isChecked);
+                box11.setChecked(isChecked);
+                box12.setChecked(isChecked);
+                box13.setChecked(isChecked);
+                box14.setChecked(isChecked);
+                box15.setChecked(isChecked);
+                box16.setChecked(isChecked);
+                box17.setChecked(isChecked);
+            });
+
+            box0.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(0));
+            box1.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(1));
+            box2.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(2));
+            box3.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(3));
+            box4.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(4));
+            box5.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(5));
+            box6.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(6));
+            box7.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(7));
+            box8.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(8));
+            box9.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(9));
+            box10.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(10));
+            box11.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(11));
+            box12.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(12));
+            box13.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(13));
+            box14.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(14));
+            box15.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(15));
+            box16.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(16));
+            box17.setText(((MainActivity)activity).mRestaurantMenuData.boxLabels.get(17));
+
+            builder.setView(view)
                     .setTitle(getResources().getString(R.string.dialog_search_title))
-                    .setPositiveButton(R.string.button_search, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            String deviceId = ((EditText) getDialog()
-                                    .findViewById(R.id.edit_text_keyword))
-                                    .getText().toString();
+                    .setPositiveButton(R.string.button_search, null)
+                    .setNegativeButton(R.string.button_cancel, null);
 
-                            Snackbar.make(getActivity().findViewById(R.id.menu_content),
-                                        deviceId,
-                                        Snackbar.LENGTH_LONG).show();
-                        }
-                    })
-                    .setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
+            final AlertDialog alertDialog = builder.create();
 
-            return builder.create();
+            alertDialog.setOnShowListener(dialog -> {
+                Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setOnClickListener(v -> {
+                    String keyword = ((EditText) SearchDialogFragment.this.getDialog()
+                            .findViewById(R.id.edit_text_keyword))
+                            .getText().toString();
+
+                    boolean[] boxes = new boolean[18];
+                    boxes[0] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_0)).isChecked();
+                    boxes[1] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_1)).isChecked();
+                    boxes[2] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_2)).isChecked();
+                    boxes[3] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_3)).isChecked();
+                    boxes[4] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_4)).isChecked();
+                    boxes[5] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_5)).isChecked();
+                    boxes[6] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_6)).isChecked();
+                    boxes[7] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_7)).isChecked();
+                    boxes[8] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_8)).isChecked();
+                    boxes[9] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_9)).isChecked();
+                    boxes[10] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_10)).isChecked();
+                    boxes[11] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_11)).isChecked();
+                    boxes[12] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_12)).isChecked();
+                    boxes[13] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_13)).isChecked();
+                    boxes[14] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_14)).isChecked();
+                    boxes[15] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_15)).isChecked();
+                    boxes[16] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_16)).isChecked();
+                    boxes[17] = ((CheckBox) SearchDialogFragment.this.getDialog().findViewById(R.id.box_17)).isChecked();
+
+                    keyword = keyword.trim();
+
+                    if (keyword.isEmpty()) {
+                        ((MainActivity) activity).showSnackbar(v, R.string.dialog_search_error_no_keyword);
+                    } else if (!keyword.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ'~.,#$&!\\-\\s]+$")) {
+                        ((MainActivity) activity).showSnackbar(v, R.string.dialog_search_error_invalid_keyword);
+                    } else if (!Arrays.toString(boxes).contains("t")) {
+                        ((MainActivity) activity).showSnackbar(v, R.string.dialog_search_error_no_category);
+                    } else {
+                        ((MainActivity) activity).updateFab();
+                        new MenuDataSearch(activity, keyword, boxes).execute();
+                        dialog.dismiss();
+                    }
+
+                });
+                Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                negativeButton.setOnClickListener(v -> dialog.dismiss());
+            });
+
+            return alertDialog;
+        }
+    }
+
+    private static class MenuDataSearch extends AsyncTask<Void, Void, Void> {
+        private final WeakReference<Activity> mActivityReference;
+        String mKeyword;
+        boolean[] mBoxes;
+
+        StringBuilder mSaladsText = new StringBuilder();
+        StringBuilder mEnchiladasText = new StringBuilder();
+        StringBuilder mBurritosAndWrapsText = new StringBuilder();
+        StringBuilder mFajitasAndSteaksText = new StringBuilder();
+        StringBuilder mSpecialtiesText = new StringBuilder();
+
+        MenuDataSearch(Activity activity, String keyword, boolean[] boxes){
+            mActivityReference = new WeakReference<>(activity);
+            mKeyword = keyword;
+            mBoxes = boxes;
+        }
+
+        @Override
+        protected Void doInBackground(Void... Void) {
+            Map<String, String> categories = ((MainActivity)mActivityReference.get()).mRestaurantMenuData.categories;
+
+            mKeyword = prepare(mKeyword);
+
+            for (int i = 1; i <= 17; i++) {
+                if (!mBoxes[i]) {
+                    continue;
+                }
+
+                StringBuilder tempText = new StringBuilder();
+
+                String categoryTitle = ((MainActivity)mActivityReference.get())
+                        .mRestaurantMenuData.boxLabels.get(i);
+                String categoryDescription = Objects.toString(categories.get(categoryTitle), "");
+                if (prepare(categoryTitle).contains(mKeyword) ||
+                        prepare(categoryDescription).contains(mKeyword)) {
+                    tempText.append("\n").append(mActivityReference.get()
+                            .getString(R.string.menu_content_all_of_the_above));
+                }
+
+                if (tempText.length() == 0) {
+                    Map<String, String> tempMap = Collections.emptyMap();
+                    switch (i) {
+                        case 1:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.salads;
+                            break;
+                        case 2:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.enchiladas;
+                            break;
+                        case 3:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.burritosAndWraps;
+                            break;
+                        case 4:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.fajitasAndSteaks;
+                            break;
+                        case 5:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.specialties;
+                            break;
+                    }
+
+                    for (Map.Entry<String, String> entry : tempMap.entrySet()) {
+                        boolean match = false;
+                        if (prepare(entry.getKey()).contains(mKeyword)) {
+                            match = true;
+                        } else if (prepare(entry.getValue()).contains(mKeyword)) {
+                            match = true;
+                        }
+                        if (match) {
+                            tempText.append("\n").append(entry.getKey());
+                        }
+                    }
+                }
+
+                if (tempText.length() != 0) {
+                    switch (i) {
+                        case 1:
+                            mSaladsText = tempText;
+                            break;
+                        case 2:
+                            mEnchiladasText = tempText;
+                            break;
+                        case 3:
+                            mBurritosAndWrapsText = tempText;
+                            break;
+                        case 4:
+                            mFajitasAndSteaksText = tempText;
+                            break;
+                        case 5:
+                            mSpecialtiesText = tempText;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private String prepare(String string) {
+            return Normalizer
+                    .normalize(string, Normalizer.Form.NFD)
+                    .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+                    .toLowerCase();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            String saladsText = mSaladsText.toString().toUpperCase();
+            if (!saladsText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mSaladsCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mSaladsTextView.setText(saladsText);
+                ((MainActivity)mActivityReference.get()).mSaladsTextView.setVisibility(View.VISIBLE);
+            }
+
+            String enchiladasText = mEnchiladasText.toString().toUpperCase();
+            if (!enchiladasText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mEnchiladasCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mEnchiladasTextView.setText(enchiladasText);
+                ((MainActivity)mActivityReference.get()).mEnchiladasTextView.setVisibility(View.VISIBLE);
+            }
+
+            String burritosAndWrapsText = mBurritosAndWrapsText.toString().toUpperCase();
+            if (!burritosAndWrapsText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mBurritosAndWrapsCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mBurritosAndWrapsTextView.setText(burritosAndWrapsText);
+                ((MainActivity)mActivityReference.get()).mBurritosAndWrapsTextView.setVisibility(View.VISIBLE);
+            }
+
+            String fajitasAndSteaksText = mFajitasAndSteaksText.toString().toUpperCase();
+            if (!fajitasAndSteaksText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mFajitasAndSteaksCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mFajitasAndSteaksTextView.setText(fajitasAndSteaksText);
+                ((MainActivity)mActivityReference.get()).mFajitasAndSteaksTextView.setVisibility(View.VISIBLE);
+            }
+
+            String specialtiesText = mSpecialtiesText.toString().toUpperCase();
+            if (!specialtiesText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mSpecialtiesCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mSpecialtiesTextView.setText(specialtiesText);
+                ((MainActivity)mActivityReference.get()).mSpecialtiesTextView.setVisibility(View.VISIBLE);
+            }
         }
     }
 
