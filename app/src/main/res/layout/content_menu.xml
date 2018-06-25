@@ -55,7 +55,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_salads" />
 
                     <TextView
                         android:id="@+id/salads_results"
@@ -89,7 +90,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_enchiladas"/>
 
                     <TextView
                         android:id="@+id/enchiladas_results"
@@ -123,7 +125,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_burritos_and_wraps"/>
 
                     <TextView
                         android:id="@+id/burritos_and_wraps_results"
@@ -157,7 +160,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_fajitas_and_steaks"/>
 
                     <TextView
                         android:id="@+id/fajitas_and_steaks_results"
@@ -191,7 +195,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_specialties"/>
 
                     <TextView
                         android:id="@+id/specialties_results"
@@ -225,7 +230,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_mariscos"/>
 
                     <TextView
                         android:id="@+id/mariscos_results"
@@ -259,7 +265,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_combinations"/>
 
                     <TextView
                         android:id="@+id/combinations_results"
@@ -293,7 +300,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_chimichangas"/>
 
                     <TextView
                         android:id="@+id/chimichangas_results"
@@ -327,7 +335,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_quesadillas"/>
 
                     <TextView
                         android:id="@+id/quesadillas_results"
@@ -361,7 +370,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_pepes_platters"/>
 
                     <TextView
                         android:id="@+id/pepes_platters_results"
@@ -395,7 +405,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_burgers_and_sandwiches"/>
 
                     <TextView
                         android:id="@+id/burgers_and_sandwiches_results"
@@ -429,7 +440,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_lunch"/>
 
                     <TextView
                         android:id="@+id/lunch_results"
@@ -463,7 +475,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_appetizers"/>
 
                     <TextView
                         android:id="@+id/appetizers_results"
@@ -497,7 +510,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_dips_for_your_chips"/>
 
                     <TextView
                         android:id="@+id/dips_for_your_chips_results"
@@ -531,7 +545,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_extras"/>
 
                     <TextView
                         android:id="@+id/extras_results"
@@ -565,7 +580,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_beverages"/>
 
                     <TextView
                         android:id="@+id/beverages_results"
@@ -599,7 +615,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/padding"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/content_description_desserts"/>
 
                     <TextView
                         android:id="@+id/desserts_results"
