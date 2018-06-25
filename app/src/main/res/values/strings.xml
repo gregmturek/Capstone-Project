@@ -50,18 +50,18 @@
 
     <string name="menu_content_salads_url"><![CDATA[http://nebula.wsimg.com/70606069d99ed844cc959afab89a4fe2?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_enchiladas_url"><![CDATA[http://nebula.wsimg.com/de27df251d7f8960090a095bd45c6864?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
-    <string name="menu_content_burritosAndWraps_url"><![CDATA[http://nebula.wsimg.com/49443bd6c3c863800eefc6f18abdf383?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
-    <string name="menu_content_fajitasAndSteaks_url"><![CDATA[http://nebula.wsimg.com/ba0ecfd1d07f3c09f25dd14fd3d6ee4f?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
+    <string name="menu_content_burritos_and_wraps_url"><![CDATA[http://nebula.wsimg.com/49443bd6c3c863800eefc6f18abdf383?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
+    <string name="menu_content_fajitas_and_steaks_url"><![CDATA[http://nebula.wsimg.com/ba0ecfd1d07f3c09f25dd14fd3d6ee4f?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_specialties_url"><![CDATA[http://nebula.wsimg.com/a6bd1c7567e163905f027061c8c0755c?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_mariscos_url"><![CDATA[http://nebula.wsimg.com/6ff02585d7b3da33f330cc5ee36ecb89?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_combinations_url"><![CDATA[http://nebula.wsimg.com/9145900281d7cc6f1f80006f76688fac?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_chimichangas_url"><![CDATA[http://nebula.wsimg.com/305f28c00421acff43f4e68362447a48?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_quesadillas_url"><![CDATA[http://nebula.wsimg.com/91a54193bd7323d6d2517acebfc71651?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
-    <string name="menu_content_pepesPlatters_url"><![CDATA[http://nebula.wsimg.com/72bedfc4d9d1daef2692f0dbf7e05677?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
-    <string name="menu_content_burgersAndSandwiches_url"><![CDATA[http://nebula.wsimg.com/705a11a2d386dfbaba5c432c4965b1dc?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
+    <string name="menu_content_pepes_platters_url"><![CDATA[http://nebula.wsimg.com/72bedfc4d9d1daef2692f0dbf7e05677?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
+    <string name="menu_content_burgers_and_sandwiches_url"><![CDATA[http://nebula.wsimg.com/705a11a2d386dfbaba5c432c4965b1dc?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_lunch_url"><![CDATA[http://nebula.wsimg.com/3183dc8a977120f231fd94c2579b2d1f?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_appetizers_url"><![CDATA[http://nebula.wsimg.com/6a2373a5492a2c1f3cd8a190a239a134?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
-    <string name="menu_content_dipsForYourChips_url"><![CDATA[http://nebula.wsimg.com/cabcf9ccbfdc36fa329ae6d132972a17?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
+    <string name="menu_content_dips_for_your_chips_url"><![CDATA[http://nebula.wsimg.com/cabcf9ccbfdc36fa329ae6d132972a17?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_extras_url"><![CDATA[http://nebula.wsimg.com/d44c54a12aacfe7d97038c3df267e1cb?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_beverages_url"><![CDATA[http://nebula.wsimg.com/afe03acbe13b507375ab1e65c47bfb91?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>
     <string name="menu_content_desserts_url"><![CDATA[http://nebula.wsimg.com/d9a4c6e17ef6434c1a239cd53355c1ef?AccessKeyId=048C0DB35EC570DAD1F0&disposition=0&alloworigin=1]]></string>

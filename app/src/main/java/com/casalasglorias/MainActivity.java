@@ -85,9 +85,15 @@ public class MainActivity extends AppCompatActivity
     TextView mNavHeaderNameTextView, mNavHeaderEmailTextView, mMainContentTextView;
 
     CardView mSaladsCardView, mEnchiladasCardView, mBurritosAndWrapsCardView, mFajitasAndSteaksCardView,
-            mSpecialtiesCardView;
+            mSpecialtiesCardView, mMariscosCardView, mCombinationsCardView, mChimichangasCardView,
+            mQuesadillasCardView, mPepesPlattersCardView, mBurgersAndSandwichesCardView, mLunchCardView,
+            mAppetizersCardView, mDipsForYourChipsCardView, mExtrasCardView, mBeveragesCardView,
+            mDessertsCardView;
     TextView mSaladsTextView, mEnchiladasTextView, mBurritosAndWrapsTextView, mFajitasAndSteaksTextView,
-            mSpecialtiesTextView;
+            mSpecialtiesTextView, mMariscosTextView, mCombinationsTextView, mChimichangasTextView,
+            mQuesadillasTextView, mPepesPlattersTextView, mBurgersAndSandwichesTextView, mLunchTextView,
+            mAppetizersTextView, mDipsForYourChipsTextView, mExtrasTextView, mBeveragesTextView,
+            mDessertsTextView;
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 123;
@@ -132,12 +138,36 @@ public class MainActivity extends AppCompatActivity
         mBurritosAndWrapsCardView = findViewById(R.id.burritos_and_wraps);
         mFajitasAndSteaksCardView = findViewById(R.id.fajitas_and_steaks);
         mSpecialtiesCardView = findViewById(R.id.specialties);
+        mMariscosCardView = findViewById(R.id.mariscos);
+        mCombinationsCardView = findViewById(R.id.combinations);
+        mChimichangasCardView = findViewById(R.id.chimichangas);
+        mQuesadillasCardView = findViewById(R.id.quesadillas);
+        mPepesPlattersCardView = findViewById(R.id.pepes_platters);
+        mBurgersAndSandwichesCardView = findViewById(R.id.burgers_and_sandwiches);
+        mLunchCardView = findViewById(R.id.lunch);
+        mAppetizersCardView = findViewById(R.id.appetizers);
+        mDipsForYourChipsCardView = findViewById(R.id.dips_for_your_chips);
+        mExtrasCardView = findViewById(R.id.extras);
+        mBeveragesCardView = findViewById(R.id.beverages);
+        mDessertsCardView = findViewById(R.id.desserts);
 
         mSaladsTextView = findViewById(R.id.salads_results);
         mEnchiladasTextView = findViewById(R.id.enchiladas_results);
         mBurritosAndWrapsTextView = findViewById(R.id.burritos_and_wraps_results);
         mFajitasAndSteaksTextView = findViewById(R.id.fajitas_and_steaks_results);
         mSpecialtiesTextView = findViewById(R.id.specialties_results);
+        mMariscosTextView = findViewById(R.id.mariscos_results);
+        mCombinationsTextView = findViewById(R.id.combinations_results);
+        mChimichangasTextView = findViewById(R.id.chimichangas_results);
+        mQuesadillasTextView = findViewById(R.id.quesadillas_results);
+        mPepesPlattersTextView = findViewById(R.id.pepes_platters_results);
+        mBurgersAndSandwichesTextView = findViewById(R.id.burgers_and_sandwiches_results);
+        mLunchTextView = findViewById(R.id.lunch_results);
+        mAppetizersTextView = findViewById(R.id.appetizers_results);
+        mDipsForYourChipsTextView = findViewById(R.id.dips_for_your_chips_results);
+        mExtrasTextView = findViewById(R.id.extras_results);
+        mBeveragesTextView = findViewById(R.id.beverages_results);
+        mDessertsTextView = findViewById(R.id.desserts_results);
 
         mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(R.id.nav_home);
@@ -172,6 +202,18 @@ public class MainActivity extends AppCompatActivity
             mBurritosAndWrapsCardView.setVisibility(View.GONE);
             mFajitasAndSteaksCardView.setVisibility(View.GONE);
             mSpecialtiesCardView.setVisibility(View.GONE);
+            mMariscosCardView.setVisibility(View.GONE);
+            mCombinationsCardView.setVisibility(View.GONE);
+            mChimichangasCardView.setVisibility(View.GONE);
+            mQuesadillasCardView.setVisibility(View.GONE);
+            mPepesPlattersCardView.setVisibility(View.GONE);
+            mBurgersAndSandwichesCardView.setVisibility(View.GONE);
+            mLunchCardView.setVisibility(View.GONE);
+            mAppetizersCardView.setVisibility(View.GONE);
+            mDipsForYourChipsCardView.setVisibility(View.GONE);
+            mExtrasCardView.setVisibility(View.GONE);
+            mBeveragesCardView.setVisibility(View.GONE);
+            mDessertsCardView.setVisibility(View.GONE);
         } else {
             mFab.setImageDrawable(getDrawable(R.drawable.ic_search_white_24dp));
             mFab.setTag(true);
@@ -181,6 +223,18 @@ public class MainActivity extends AppCompatActivity
             mBurritosAndWrapsCardView.setVisibility(View.VISIBLE);
             mFajitasAndSteaksCardView.setVisibility(View.VISIBLE);
             mSpecialtiesCardView.setVisibility(View.VISIBLE);
+            mMariscosCardView.setVisibility(View.VISIBLE);
+            mCombinationsCardView.setVisibility(View.VISIBLE);
+            mChimichangasCardView.setVisibility(View.VISIBLE);
+            mQuesadillasCardView.setVisibility(View.VISIBLE);
+            mPepesPlattersCardView.setVisibility(View.VISIBLE);
+            mBurgersAndSandwichesCardView.setVisibility(View.VISIBLE);
+            mLunchCardView.setVisibility(View.VISIBLE);
+            mAppetizersCardView.setVisibility(View.VISIBLE);
+            mDipsForYourChipsCardView.setVisibility(View.VISIBLE);
+            mExtrasCardView.setVisibility(View.VISIBLE);
+            mBeveragesCardView.setVisibility(View.VISIBLE);
+            mDessertsCardView.setVisibility(View.VISIBLE);
 
             mSaladsTextView.setText(null);
             mSaladsTextView.setVisibility(View.GONE);
@@ -192,6 +246,30 @@ public class MainActivity extends AppCompatActivity
             mFajitasAndSteaksTextView.setVisibility(View.GONE);
             mSpecialtiesTextView.setText(null);
             mSpecialtiesTextView.setVisibility(View.GONE);
+            mMariscosTextView.setText(null);
+            mMariscosTextView.setVisibility(View.GONE);
+            mCombinationsTextView.setText(null);
+            mCombinationsTextView.setVisibility(View.GONE);
+            mChimichangasTextView.setText(null);
+            mChimichangasTextView.setVisibility(View.GONE);
+            mQuesadillasTextView.setText(null);
+            mQuesadillasTextView.setVisibility(View.GONE);
+            mPepesPlattersTextView.setText(null);
+            mPepesPlattersTextView.setVisibility(View.GONE);
+            mBurgersAndSandwichesTextView.setText(null);
+            mBurgersAndSandwichesTextView.setVisibility(View.GONE);
+            mLunchTextView.setText(null);
+            mLunchTextView.setVisibility(View.GONE);
+            mAppetizersTextView.setText(null);
+            mAppetizersTextView.setVisibility(View.GONE);
+            mDipsForYourChipsTextView.setText(null);
+            mDipsForYourChipsTextView.setVisibility(View.GONE);
+            mExtrasTextView.setText(null);
+            mExtrasTextView.setVisibility(View.GONE);
+            mBeveragesTextView.setText(null);
+            mBeveragesTextView.setVisibility(View.GONE);
+            mDessertsTextView.setText(null);
+            mDessertsTextView.setVisibility(View.GONE);
         }
     }
 
@@ -367,13 +445,13 @@ public class MainActivity extends AppCompatActivity
                 .load(enchiladasUri)
                 .into(enchiladasImageView);
 
-        Uri burritosAndWrapsUri = Uri.parse(getString(R.string.menu_content_burritosAndWraps_url));
+        Uri burritosAndWrapsUri = Uri.parse(getString(R.string.menu_content_burritos_and_wraps_url));
         ImageView burritosAndWrapsImageView = findViewById(R.id.burritos_and_wraps_image);
         GlideApp.with(this)
                 .load(burritosAndWrapsUri)
                 .into(burritosAndWrapsImageView);
 
-        Uri fajitasAndSteaksUri = Uri.parse(getString(R.string.menu_content_fajitasAndSteaks_url));
+        Uri fajitasAndSteaksUri = Uri.parse(getString(R.string.menu_content_fajitas_and_steaks_url));
         ImageView fajitasAndSteaksImageView = findViewById(R.id.fajitas_and_steaks_image);
         GlideApp.with(this)
                 .load(fajitasAndSteaksUri)
@@ -384,6 +462,78 @@ public class MainActivity extends AppCompatActivity
         GlideApp.with(this)
                 .load(specialtiesUri)
                 .into(specialtiesImageView);
+
+        Uri mariscosUri = Uri.parse(getString(R.string.menu_content_mariscos_url));
+        ImageView mariscosImageView = findViewById(R.id.mariscos_image);
+        GlideApp.with(this)
+                .load(mariscosUri)
+                .into(mariscosImageView);
+
+        Uri combinationsUri = Uri.parse(getString(R.string.menu_content_combinations_url));
+        ImageView combinationsImageView = findViewById(R.id.combinations_image);
+        GlideApp.with(this)
+                .load(combinationsUri)
+                .into(combinationsImageView);
+
+        Uri chimichangasUri = Uri.parse(getString(R.string.menu_content_chimichangas_url));
+        ImageView chimichangasImageView = findViewById(R.id.chimichangas_image);
+        GlideApp.with(this)
+                .load(chimichangasUri)
+                .into(chimichangasImageView);
+
+        Uri quesadillasUri = Uri.parse(getString(R.string.menu_content_quesadillas_url));
+        ImageView quesadillasImageView = findViewById(R.id.quesadillas_image);
+        GlideApp.with(this)
+                .load(quesadillasUri)
+                .into(quesadillasImageView);
+
+        Uri pepesPlattersUri = Uri.parse(getString(R.string.menu_content_pepes_platters_url));
+        ImageView pepesPlattersImageView = findViewById(R.id.pepes_platters_image);
+        GlideApp.with(this)
+                .load(pepesPlattersUri)
+                .into(pepesPlattersImageView);
+
+        Uri burgersAndSandwichesUri = Uri.parse(getString(R.string.menu_content_burgers_and_sandwiches_url));
+        ImageView burgersAndSandwichesImageView = findViewById(R.id.burgers_and_sandwiches_image);
+        GlideApp.with(this)
+                .load(burgersAndSandwichesUri)
+                .into(burgersAndSandwichesImageView);
+
+        Uri lunchUri = Uri.parse(getString(R.string.menu_content_lunch_url));
+        ImageView lunchImageView = findViewById(R.id.lunch_image);
+        GlideApp.with(this)
+                .load(lunchUri)
+                .into(lunchImageView);
+
+        Uri appetizersUri = Uri.parse(getString(R.string.menu_content_appetizers_url));
+        ImageView appetizersImageView = findViewById(R.id.appetizers_image);
+        GlideApp.with(this)
+                .load(appetizersUri)
+                .into(appetizersImageView);
+
+        Uri dipsForYourChipsUri = Uri.parse(getString(R.string.menu_content_dips_for_your_chips_url));
+        ImageView dipsForYourChipsImageView = findViewById(R.id.dips_for_your_chips_image);
+        GlideApp.with(this)
+                .load(dipsForYourChipsUri)
+                .into(dipsForYourChipsImageView);
+
+        Uri extrasUri = Uri.parse(getString(R.string.menu_content_extras_url));
+        ImageView extrasImageView = findViewById(R.id.extras_image);
+        GlideApp.with(this)
+                .load(extrasUri)
+                .into(extrasImageView);
+
+        Uri beveragesUri = Uri.parse(getString(R.string.menu_content_beverages_url));
+        ImageView beveragesImageView = findViewById(R.id.beverages_image);
+        GlideApp.with(this)
+                .load(beveragesUri)
+                .into(beveragesImageView);
+
+        Uri dessertsUri = Uri.parse(getString(R.string.menu_content_desserts_url));
+        ImageView dessertsImageView = findViewById(R.id.desserts_image);
+        GlideApp.with(this)
+                .load(dessertsUri)
+                .into(dessertsImageView);
     }
 
     private void loadCateringWebView() {
@@ -743,6 +893,18 @@ public class MainActivity extends AppCompatActivity
         StringBuilder mBurritosAndWrapsText = new StringBuilder();
         StringBuilder mFajitasAndSteaksText = new StringBuilder();
         StringBuilder mSpecialtiesText = new StringBuilder();
+        StringBuilder mMariscosText = new StringBuilder();
+        StringBuilder mCombinationsText = new StringBuilder();
+        StringBuilder mChimichangasText = new StringBuilder();
+        StringBuilder mQuesadillasText = new StringBuilder();
+        StringBuilder mPepesPlattersText = new StringBuilder();
+        StringBuilder mBurgersAndSandwichesText = new StringBuilder();
+        StringBuilder mLunchText = new StringBuilder();
+        StringBuilder mAppetizersText = new StringBuilder();
+        StringBuilder mDipsForYourChipsText = new StringBuilder();
+        StringBuilder mExtrasText = new StringBuilder();
+        StringBuilder mBeveragesText = new StringBuilder();
+        StringBuilder mDessertsText = new StringBuilder();
 
         MenuDataSearch(Activity activity, String keyword, boolean[] boxes){
             mActivityReference = new WeakReference<>(activity);
@@ -795,6 +957,54 @@ public class MainActivity extends AppCompatActivity
                             tempMap = ((MainActivity)mActivityReference
                                     .get()).mRestaurantMenuData.specialties;
                             break;
+                        case 6:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.mariscos;
+                            break;
+                        case 7:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.combinations;
+                            break;
+                        case 8:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.chimichangas;
+                            break;
+                        case 9:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.quesadillas;
+                            break;
+                        case 10:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.pepsPlatters;
+                            break;
+                        case 11:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.burgersAndSandwiches;
+                            break;
+                        case 12:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.lunch;
+                            break;
+                        case 13:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.appetizers;
+                            break;
+                        case 14:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.dipsForYourChips;
+                            break;
+                        case 15:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.extras;
+                            break;
+                        case 16:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.beverages;
+                            break;
+                        case 17:
+                            tempMap = ((MainActivity)mActivityReference
+                                    .get()).mRestaurantMenuData.desserts;
+                            break;
                     }
 
                     for (Map.Entry<String, String> entry : tempMap.entrySet()) {
@@ -826,6 +1036,43 @@ public class MainActivity extends AppCompatActivity
                             break;
                         case 5:
                             mSpecialtiesText = tempText;
+                            break;
+                        case 6:
+                            mMariscosText = tempText;
+                            break;
+                        case 7:
+                            mCombinationsText = tempText;
+                            break;
+                        case 8:
+                            mChimichangasText = tempText;
+                            break;
+                        case 9:
+                            mQuesadillasText = tempText;
+                            break;
+                        case 10:
+                            mPepesPlattersText = tempText;
+                            break;
+                        case 11:
+                            mBurgersAndSandwichesText = tempText;
+                            break;
+                        case 12:
+                            mLunchText = tempText;
+                            break;
+                        case 13:
+                            mAppetizersText = tempText;
+                            break;
+                        case 14:
+                            mDipsForYourChipsText = tempText;
+                            break;
+                        case 15:
+                            mExtrasText = tempText;
+                            break;
+                        case 16:
+                            mBeveragesText = tempText;
+                            break;
+                        case 17:
+                            mDessertsText = tempText;
+                            break;
                     }
                 }
             }
@@ -875,6 +1122,90 @@ public class MainActivity extends AppCompatActivity
                 ((MainActivity)mActivityReference.get()).mSpecialtiesCardView.setVisibility(View.VISIBLE);
                 ((MainActivity)mActivityReference.get()).mSpecialtiesTextView.setText(specialtiesText);
                 ((MainActivity)mActivityReference.get()).mSpecialtiesTextView.setVisibility(View.VISIBLE);
+            }
+
+            String mariscosText = mMariscosText.toString().toUpperCase();
+            if (!mariscosText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mMariscosCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mMariscosTextView.setText(mariscosText);
+                ((MainActivity)mActivityReference.get()).mMariscosTextView.setVisibility(View.VISIBLE);
+            }
+
+            String combinationsText = mCombinationsText.toString().toUpperCase();
+            if (!combinationsText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mCombinationsCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mCombinationsTextView.setText(combinationsText);
+                ((MainActivity)mActivityReference.get()).mCombinationsTextView.setVisibility(View.VISIBLE);
+            }
+
+            String chimichangasText = mChimichangasText.toString().toUpperCase();
+            if (!chimichangasText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mChimichangasCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mChimichangasTextView.setText(chimichangasText);
+                ((MainActivity)mActivityReference.get()).mChimichangasTextView.setVisibility(View.VISIBLE);
+            }
+
+            String quesadillasText = mQuesadillasText.toString().toUpperCase();
+            if (!quesadillasText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mQuesadillasCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mQuesadillasTextView.setText(quesadillasText);
+                ((MainActivity)mActivityReference.get()).mQuesadillasTextView.setVisibility(View.VISIBLE);
+            }
+
+            String pepesPlattersText = mPepesPlattersText.toString().toUpperCase();
+            if (!pepesPlattersText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mPepesPlattersCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mPepesPlattersTextView.setText(pepesPlattersText);
+                ((MainActivity)mActivityReference.get()).mPepesPlattersTextView.setVisibility(View.VISIBLE);
+            }
+
+            String burgersAndSandwichesText = mBurgersAndSandwichesText.toString().toUpperCase();
+            if (!burgersAndSandwichesText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mBurgersAndSandwichesCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mBurgersAndSandwichesTextView.setText(burgersAndSandwichesText);
+                ((MainActivity)mActivityReference.get()).mBurgersAndSandwichesTextView.setVisibility(View.VISIBLE);
+            }
+
+            String lunchText = mLunchText.toString().toUpperCase();
+            if (!lunchText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mLunchCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mLunchTextView.setText(lunchText);
+                ((MainActivity)mActivityReference.get()).mLunchTextView.setVisibility(View.VISIBLE);
+            }
+
+            String appetizersText = mAppetizersText.toString().toUpperCase();
+            if (!appetizersText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mAppetizersCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mAppetizersTextView.setText(appetizersText);
+                ((MainActivity)mActivityReference.get()).mAppetizersTextView.setVisibility(View.VISIBLE);
+            }
+
+            String dipsForYourChipsText = mDipsForYourChipsText.toString().toUpperCase();
+            if (!dipsForYourChipsText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mDipsForYourChipsCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mDipsForYourChipsTextView.setText(dipsForYourChipsText);
+                ((MainActivity)mActivityReference.get()).mDipsForYourChipsTextView.setVisibility(View.VISIBLE);
+            }
+
+            String extrasText = mExtrasText.toString().toUpperCase();
+            if (!extrasText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mExtrasCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mExtrasTextView.setText(extrasText);
+                ((MainActivity)mActivityReference.get()).mExtrasTextView.setVisibility(View.VISIBLE);
+            }
+
+            String beveragesText = mBeveragesText.toString().toUpperCase();
+            if (!beveragesText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mBeveragesCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mBeveragesTextView.setText(beveragesText);
+                ((MainActivity)mActivityReference.get()).mBeveragesTextView.setVisibility(View.VISIBLE);
+            }
+
+            String dessertsText = mDessertsText.toString().toUpperCase();
+            if (!dessertsText.isEmpty()) {
+                ((MainActivity)mActivityReference.get()).mDessertsCardView.setVisibility(View.VISIBLE);
+                ((MainActivity)mActivityReference.get()).mDessertsTextView.setText(dessertsText);
+                ((MainActivity)mActivityReference.get()).mDessertsTextView.setVisibility(View.VISIBLE);
             }
         }
     }

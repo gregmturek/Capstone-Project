@@ -13,6 +13,18 @@ public class RestaurantMenuData {
     public Map<String, String> burritosAndWraps = new HashMap<>();
     public Map<String, String> fajitasAndSteaks = new HashMap<>();
     public Map<String, String> specialties = new HashMap<>();
+    public Map<String, String> mariscos = new HashMap<>();
+    public Map<String, String> combinations = new HashMap<>();
+    public Map<String, String> chimichangas = new HashMap<>();
+    public Map<String, String> quesadillas = new HashMap<>();
+    public Map<String, String> pepsPlatters = new HashMap<>();
+    public Map<String, String> burgersAndSandwiches = new HashMap<>();
+    public Map<String, String> lunch = new HashMap<>();
+    public Map<String, String> appetizers = new HashMap<>();
+    public Map<String, String> dipsForYourChips = new HashMap<>();
+    public Map<String, String> extras = new HashMap<>();
+    public Map<String, String> beverages = new HashMap<>();
+    public Map<String, String> desserts = new HashMap<>();
 
     public RestaurantMenuData() {}
 }
