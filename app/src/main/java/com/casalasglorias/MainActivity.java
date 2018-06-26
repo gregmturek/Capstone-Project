@@ -31,6 +31,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -41,6 +42,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
@@ -98,8 +101,8 @@ public class MainActivity extends AppCompatActivity
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 123;
 
-    private static String mModifiedHomeWebView = null;
-    private static boolean mCateringWebViewLoaded = false;
+    private static String mModifiedHomeWebView;
+    private static boolean mCateringWebViewLoaded;
 
     RestaurantMenuData mRestaurantMenuData;
 
@@ -109,6 +112,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mModifiedHomeWebView = null;
+        mCateringWebViewLoaded = false;
 
         mFab = findViewById(R.id.fab);
         mFab.setTag(true);
@@ -326,7 +332,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id != R.id.nav_sign) {
-            ConstraintLayout mainContent = findViewById(R.id.main_content);
+            RelativeLayout mainContent = findViewById(R.id.main_content);
             NestedScrollView menuContent = findViewById(R.id.menu_content);
             FrameLayout cateringContent = findViewById(R.id.catering_content);
             ConstraintLayout findContent = findViewById(R.id.find_content);
@@ -348,9 +354,7 @@ public class MainActivity extends AppCompatActivity
                 loadMenuImages();
             } else if (id == R.id.nav_catering) {
                 cateringContent.setVisibility(View.VISIBLE);
-                if (!mCateringWebViewLoaded) {
-                    loadCateringWebView();
-                }
+                loadCateringWebView();
             } else if (id == R.id.nav_find) {
                 findContent.setVisibility(View.VISIBLE);
                 tryToShowMap();
@@ -373,9 +377,30 @@ public class MainActivity extends AppCompatActivity
     private void loadHomeWebView(){
         WebView webView = findViewById(R.id.main_content_web_view);
 
-        webView.getSettings().setJavaScriptEnabled(true);
-
         webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                if (url.equals(getString(R.string.main_content_web_view_url))) {
+                    view.setVisibility(View.INVISIBLE);
+                    view.getSettings().setJavaScriptEnabled(true);
+                    view.setWebChromeClient(new WebChromeClient() {
+                        @Override
+                        public void onProgressChanged(WebView view, int newProgress) {
+                            ProgressBar progressBar = findViewById(R.id.main_content_progress_bar);
+                            if (newProgress < 100) {
+                                progressBar.setVisibility(View.VISIBLE);
+                            } else {
+                                progressBar.postDelayed(() -> {
+                                    if (progressBar != null) {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                }, 500);
+                            }
+                        }
+                    });
+                }
+            }
+
             @Override
             public void onPageFinished(WebView view, String url)
             {
@@ -403,28 +428,31 @@ public class MainActivity extends AppCompatActivity
                             false,
                             value -> mModifiedHomeWebView = value);
 
+                    view.setWebChromeClient(null);
+                    view.getSettings().setJavaScriptEnabled(false);
                     view.setVisibility(View.VISIBLE);
                 } else if (url.endsWith(getString(R.string.html_content_unavailable))) {
                     mModifiedHomeWebView = null;
                 }
-
-                view.getSettings().setJavaScriptEnabled(false);
             }
 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
                 view.loadData(getString(R.string.html_content_unavailable), "text/html", null);
             }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                if (url.equals(getString(R.string.main_content_web_view_url)) ||
+                        url.equals("file://" + mModifiedHomeWebView)) {
+                    view.loadUrl(request.getUrl().toString());
+                }
                 return true;
             }
         });
 
         if (mModifiedHomeWebView == null) {
-            webView.setVisibility(View.INVISIBLE);
             webView.loadUrl(getString(R.string.main_content_web_view_url));
         } else {
             String url = "file://" + mModifiedHomeWebView;
@@ -537,6 +565,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadCateringWebView() {
+        if (mCateringWebViewLoaded) {
+            return;
+        }
+
         WebView webView = findViewById(R.id.catering_content_web_view);
         WebSettings webSettings = webView.getSettings();
 
@@ -550,10 +582,29 @@ public class MainActivity extends AppCompatActivity
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                if (url.equals(getString(R.string.catering_content_web_view_url))) {
+                    view.setWebChromeClient(new WebChromeClient() {
+                        @Override
+                        public void onProgressChanged(WebView view, int newProgress) {
+                            ProgressBar progressBar = findViewById(R.id.catering_content_progress_bar);
+                            if (newProgress < 100) {
+                                progressBar.setVisibility(View.VISIBLE);
+
+                            } else {
+                                progressBar.postDelayed(() -> progressBar.setVisibility(View.GONE), 500);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
             public void onPageFinished(WebView view, String url)
             {
                 if (url.equals(getString(R.string.catering_content_web_view_url))) {
                     mCateringWebViewLoaded = true;
+                    view.setWebChromeClient(null);
                 } else if (url.endsWith(getString(R.string.html_content_unavailable))) {
                     mCateringWebViewLoaded = false;
                 }
@@ -561,8 +612,6 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-
                 WebSettings webSettings1 = view.getSettings();
                 webSettings1.setSupportZoom(false);
                 webSettings1.setBuiltInZoomControls(false);
