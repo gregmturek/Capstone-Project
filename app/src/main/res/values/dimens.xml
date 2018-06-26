@@ -10,4 +10,15 @@
     <dimen name="dialog_padding_top">12dp</dimen>
     <dimen name="padding">8dp</dimen>
     <dimen name="margin">8dp</dimen>
+
+    <!--Widget-->
+
+    <dimen name="widget_min_width">250dp</dimen>
+    <dimen name="widget_min_height">250dp</dimen>
+    <dimen name="widget_heading_size">24sp</dimen>
+    <dimen name="widget_divider_margin_top">2dp</dimen>
+    <dimen name="widget_divider_margin_bottom">8dp</dimen>
+    <dimen name="widget_layout_padding">8dp</dimen>
+    <dimen name="widget_divider_height">1dp</dimen>
+
 </resources>

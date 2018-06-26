@@ -90,5 +90,8 @@
     <string name="content_description_extras">extras section of menu</string>
     <string name="content_description_beverages">beverages section of menu</string>
     <string name="content_description_desserts">desserts section of menu</string>
+    <string name="content_description_divider">divider</string>
+    <string name="content_description_section_of_menu">section of menu</string>
 
+    <string name="widget_button_text">Change</string>
 </resources>

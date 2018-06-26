@@ -6,4 +6,10 @@
     <color name="colorAccent">#ffc400</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <!--Widget-->
+
+    <color name="widget_background">#7F424242</color>
+    <color name="widget_text">#FFFFFF</color>
+
 </resources>
