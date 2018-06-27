@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity
 
         mModifiedHomeWebView = null;
         mCateringWebViewLoaded = false;
+        mRestaurantMenuData = null;
 
         mFab = findViewById(R.id.fab);
         mFab.setTag(true);
@@ -194,6 +195,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d(LOG_TAG, "loadPost:onCancelled", databaseError.toException());
+                mRestaurantMenuData = null;
             }
         });
     }
@@ -337,20 +339,20 @@ public class MainActivity extends AppCompatActivity
             FrameLayout cateringContent = findViewById(R.id.catering_content);
             ConstraintLayout findContent = findViewById(R.id.find_content);
 
-            FloatingActionButton floatingActionButton = findViewById(R.id.fab);
-
             mainContent.setVisibility(View.INVISIBLE);
             menuContent.setVisibility(View.INVISIBLE);
             cateringContent.setVisibility(View.INVISIBLE);
             findContent.setVisibility(View.INVISIBLE);
-            floatingActionButton.setVisibility(View.INVISIBLE);
+            mFab.setVisibility(View.INVISIBLE);
 
             if (id == R.id.nav_home) {
                 mainContent.setVisibility(View.VISIBLE);
                 loadHomeWebView();
             } else if (id == R.id.nav_menu) {
                 menuContent.setVisibility(View.VISIBLE);
-                floatingActionButton.setVisibility(View.VISIBLE);
+                if (mRestaurantMenuData != null) {
+                    mFab.setVisibility(View.VISIBLE);
+                }
                 loadMenuImages();
             } else if (id == R.id.nav_catering) {
                 cateringContent.setVisibility(View.VISIBLE);
