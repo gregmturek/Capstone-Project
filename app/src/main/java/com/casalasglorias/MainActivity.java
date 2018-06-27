@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                 mRestaurantMenuData = dataSnapshot.getValue(RestaurantMenuData.class);
+                 mRestaurantMenuData = dataSnapshot.child("public").getValue(RestaurantMenuData.class);
             }
 
             @Override
