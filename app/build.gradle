@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'udacity'
+            keyPassword 'udacity'
+            storeFile file("$rootDir/keystore_for_udacity.jks")
+            storePassword 'udacity'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.casalasglorias"
@@ -16,6 +24,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
