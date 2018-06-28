@@ -979,7 +979,7 @@ public class MainActivity extends AppCompatActivity
 
                     if (keyword.isEmpty()) {
                         ((MainActivity) activity).showSnackbar(v, R.string.dialog_search_error_no_keyword);
-                    } else if (!keyword.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ'~.,#$&!\\-\\s]+$")) {
+                    } else if (!keyword.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ'~.,$&!/#\\-\\s]+$")) {
                         ((MainActivity) activity).showSnackbar(v, R.string.dialog_search_error_invalid_keyword);
                     } else if (!Arrays.toString(boxes).contains("t")) {
                         ((MainActivity) activity).showSnackbar(v, R.string.dialog_search_error_no_category);
@@ -1003,23 +1003,23 @@ public class MainActivity extends AppCompatActivity
         String mKeyword;
         boolean[] mBoxes;
 
-        StringBuilder mSaladsText = new StringBuilder();
-        StringBuilder mEnchiladasText = new StringBuilder();
-        StringBuilder mBurritosAndWrapsText = new StringBuilder();
-        StringBuilder mFajitasAndSteaksText = new StringBuilder();
-        StringBuilder mSpecialtiesText = new StringBuilder();
-        StringBuilder mMariscosText = new StringBuilder();
-        StringBuilder mCombinationsText = new StringBuilder();
-        StringBuilder mChimichangasText = new StringBuilder();
-        StringBuilder mQuesadillasText = new StringBuilder();
-        StringBuilder mPepesPlattersText = new StringBuilder();
-        StringBuilder mBurgersAndSandwichesText = new StringBuilder();
-        StringBuilder mLunchText = new StringBuilder();
-        StringBuilder mAppetizersText = new StringBuilder();
-        StringBuilder mDipsForYourChipsText = new StringBuilder();
-        StringBuilder mExtrasText = new StringBuilder();
-        StringBuilder mBeveragesText = new StringBuilder();
-        StringBuilder mDessertsText = new StringBuilder();
+        String mSaladsText = "";
+        String mEnchiladasText = "";
+        String mBurritosAndWrapsText = "";
+        String mFajitasAndSteaksText = "";
+        String mSpecialtiesText = "";
+        String mMariscosText = "";
+        String mCombinationsText = "";
+        String mChimichangasText = "";
+        String mQuesadillasText = "";
+        String mPepesPlattersText = "";
+        String mBurgersAndSandwichesText = "";
+        String mLunchText = "";
+        String mAppetizersText = "";
+        String mDipsForYourChipsText = "";
+        String mExtrasText = "";
+        String mBeveragesText = "";
+        String mDessertsText = "";
 
         MenuDataSearch(Activity activity, String keyword, boolean[] boxes){
             mActivityReference = new WeakReference<>(activity);
@@ -1031,7 +1031,7 @@ public class MainActivity extends AppCompatActivity
         protected Void doInBackground(Void... Void) {
             Map<String, String> categories = ((MainActivity)mActivityReference.get()).mRestaurantMenuData.categories;
 
-            mKeyword = prepare(mKeyword);
+            mKeyword = prepareToCompare(mKeyword);
 
             for (int i = 1; i <= 17; i++) {
                 if (!mBoxes[i]) {
@@ -1043,8 +1043,8 @@ public class MainActivity extends AppCompatActivity
                 String categoryTitle = ((MainActivity)mActivityReference.get())
                         .mRestaurantMenuData.boxLabels.get(i);
                 String categoryDescription = Objects.toString(categories.get(categoryTitle), "");
-                if (prepare(categoryTitle).contains(mKeyword) ||
-                        prepare(categoryDescription).contains(mKeyword)) {
+                if (prepareToCompare(categoryTitle).contains(mKeyword) ||
+                        prepareToCompare(categoryDescription).contains(mKeyword)) {
                     tempText.append("\n").append(mActivityReference.get()
                             .getString(R.string.menu_content_all_of_the_above));
                 }
@@ -1090,7 +1090,7 @@ public class MainActivity extends AppCompatActivity
                             break;
                         case 10:
                             tempMap = ((MainActivity)mActivityReference
-                                    .get()).mRestaurantMenuData.pepsPlatters;
+                                    .get()).mRestaurantMenuData.pepesPlatters;
                             break;
                         case 11:
                             tempMap = ((MainActivity)mActivityReference
@@ -1124,9 +1124,9 @@ public class MainActivity extends AppCompatActivity
 
                     for (Map.Entry<String, String> entry : tempMap.entrySet()) {
                         boolean match = false;
-                        if (prepare(entry.getKey()).contains(mKeyword)) {
+                        if (prepareToCompare(entry.getKey()).contains(mKeyword)) {
                             match = true;
-                        } else if (prepare(entry.getValue()).contains(mKeyword)) {
+                        } else if (prepareToCompare(entry.getValue()).contains(mKeyword)) {
                             match = true;
                         }
                         if (match) {
@@ -1138,55 +1138,55 @@ public class MainActivity extends AppCompatActivity
                 if (tempText.length() != 0) {
                     switch (i) {
                         case 1:
-                            mSaladsText = tempText;
+                            mSaladsText = convertToDisplay(tempText.toString());
                             break;
                         case 2:
-                            mEnchiladasText = tempText;
+                            mEnchiladasText = convertToDisplay(tempText.toString());
                             break;
                         case 3:
-                            mBurritosAndWrapsText = tempText;
+                            mBurritosAndWrapsText = convertToDisplay(tempText.toString());
                             break;
                         case 4:
-                            mFajitasAndSteaksText = tempText;
+                            mFajitasAndSteaksText = convertToDisplay(tempText.toString());
                             break;
                         case 5:
-                            mSpecialtiesText = tempText;
+                            mSpecialtiesText = convertToDisplay(tempText.toString());
                             break;
                         case 6:
-                            mMariscosText = tempText;
+                            mMariscosText = convertToDisplay(tempText.toString());
                             break;
                         case 7:
-                            mCombinationsText = tempText;
+                            mCombinationsText = convertToDisplay(tempText.toString());
                             break;
                         case 8:
-                            mChimichangasText = tempText;
+                            mChimichangasText = convertToDisplay(tempText.toString());
                             break;
                         case 9:
-                            mQuesadillasText = tempText;
+                            mQuesadillasText = convertToDisplay(tempText.toString());
                             break;
                         case 10:
-                            mPepesPlattersText = tempText;
+                            mPepesPlattersText = convertToDisplay(tempText.toString());
                             break;
                         case 11:
-                            mBurgersAndSandwichesText = tempText;
+                            mBurgersAndSandwichesText = convertToDisplay(tempText.toString());
                             break;
                         case 12:
-                            mLunchText = tempText;
+                            mLunchText = convertToDisplay(tempText.toString());
                             break;
                         case 13:
-                            mAppetizersText = tempText;
+                            mAppetizersText = convertToDisplay(tempText.toString());
                             break;
                         case 14:
-                            mDipsForYourChipsText = tempText;
+                            mDipsForYourChipsText = convertToDisplay(tempText.toString());
                             break;
                         case 15:
-                            mExtrasText = tempText;
+                            mExtrasText = convertToDisplay(tempText.toString());
                             break;
                         case 16:
-                            mBeveragesText = tempText;
+                            mBeveragesText = convertToDisplay(tempText.toString());
                             break;
                         case 17:
-                            mDessertsText = tempText;
+                            mDessertsText = convertToDisplay(tempText.toString());
                             break;
                     }
                 }
@@ -1195,131 +1195,121 @@ public class MainActivity extends AppCompatActivity
             return null;
         }
 
-        private String prepare(String string) {
+        private String prepareToCompare(String string) {
             return Normalizer
-                    .normalize(string, Normalizer.Form.NFD)
+                    .normalize(convertToDisplay(string), Normalizer.Form.NFD)
                     .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
                     .toLowerCase();
         }
 
+        private String convertToDisplay(String string) {
+            return string
+                    .replaceAll("__", "/")
+                    .replaceAll("_", "#")
+                    .toUpperCase();
+        }
+
         @Override
         protected void onPostExecute(Void aVoid) {
-            String saladsText = mSaladsText.toString().toUpperCase();
-            if (!saladsText.isEmpty()) {
+            if (!mSaladsText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mSaladsCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mSaladsTextView.setText(saladsText);
+                ((MainActivity)mActivityReference.get()).mSaladsTextView.setText(mSaladsText);
                 ((MainActivity)mActivityReference.get()).mSaladsTextView.setVisibility(View.VISIBLE);
             }
 
-            String enchiladasText = mEnchiladasText.toString().toUpperCase();
-            if (!enchiladasText.isEmpty()) {
+            if (!mEnchiladasText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mEnchiladasCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mEnchiladasTextView.setText(enchiladasText);
+                ((MainActivity)mActivityReference.get()).mEnchiladasTextView.setText(mEnchiladasText);
                 ((MainActivity)mActivityReference.get()).mEnchiladasTextView.setVisibility(View.VISIBLE);
             }
 
-            String burritosAndWrapsText = mBurritosAndWrapsText.toString().toUpperCase();
-            if (!burritosAndWrapsText.isEmpty()) {
+            if (!mBurritosAndWrapsText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mBurritosAndWrapsCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mBurritosAndWrapsTextView.setText(burritosAndWrapsText);
+                ((MainActivity)mActivityReference.get()).mBurritosAndWrapsTextView.setText(mBurritosAndWrapsText);
                 ((MainActivity)mActivityReference.get()).mBurritosAndWrapsTextView.setVisibility(View.VISIBLE);
             }
 
-            String fajitasAndSteaksText = mFajitasAndSteaksText.toString().toUpperCase();
-            if (!fajitasAndSteaksText.isEmpty()) {
+            if (!mFajitasAndSteaksText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mFajitasAndSteaksCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mFajitasAndSteaksTextView.setText(fajitasAndSteaksText);
+                ((MainActivity)mActivityReference.get()).mFajitasAndSteaksTextView.setText(mFajitasAndSteaksText);
                 ((MainActivity)mActivityReference.get()).mFajitasAndSteaksTextView.setVisibility(View.VISIBLE);
             }
 
-            String specialtiesText = mSpecialtiesText.toString().toUpperCase();
-            if (!specialtiesText.isEmpty()) {
+            if (!mSpecialtiesText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mSpecialtiesCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mSpecialtiesTextView.setText(specialtiesText);
+                ((MainActivity)mActivityReference.get()).mSpecialtiesTextView.setText(mSpecialtiesText);
                 ((MainActivity)mActivityReference.get()).mSpecialtiesTextView.setVisibility(View.VISIBLE);
             }
 
-            String mariscosText = mMariscosText.toString().toUpperCase();
-            if (!mariscosText.isEmpty()) {
+            if (!mMariscosText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mMariscosCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mMariscosTextView.setText(mariscosText);
+                ((MainActivity)mActivityReference.get()).mMariscosTextView.setText(mMariscosText);
                 ((MainActivity)mActivityReference.get()).mMariscosTextView.setVisibility(View.VISIBLE);
             }
 
-            String combinationsText = mCombinationsText.toString().toUpperCase();
-            if (!combinationsText.isEmpty()) {
+            if (!mCombinationsText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mCombinationsCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mCombinationsTextView.setText(combinationsText);
+                ((MainActivity)mActivityReference.get()).mCombinationsTextView.setText(mCombinationsText);
                 ((MainActivity)mActivityReference.get()).mCombinationsTextView.setVisibility(View.VISIBLE);
             }
 
-            String chimichangasText = mChimichangasText.toString().toUpperCase();
-            if (!chimichangasText.isEmpty()) {
+            if (!mChimichangasText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mChimichangasCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mChimichangasTextView.setText(chimichangasText);
+                ((MainActivity)mActivityReference.get()).mChimichangasTextView.setText(mChimichangasText);
                 ((MainActivity)mActivityReference.get()).mChimichangasTextView.setVisibility(View.VISIBLE);
             }
 
-            String quesadillasText = mQuesadillasText.toString().toUpperCase();
-            if (!quesadillasText.isEmpty()) {
+            if (!mQuesadillasText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mQuesadillasCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mQuesadillasTextView.setText(quesadillasText);
+                ((MainActivity)mActivityReference.get()).mQuesadillasTextView.setText(mQuesadillasText);
                 ((MainActivity)mActivityReference.get()).mQuesadillasTextView.setVisibility(View.VISIBLE);
             }
 
-            String pepesPlattersText = mPepesPlattersText.toString().toUpperCase();
-            if (!pepesPlattersText.isEmpty()) {
+            if (!mPepesPlattersText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mPepesPlattersCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mPepesPlattersTextView.setText(pepesPlattersText);
+                ((MainActivity)mActivityReference.get()).mPepesPlattersTextView.setText(mPepesPlattersText);
                 ((MainActivity)mActivityReference.get()).mPepesPlattersTextView.setVisibility(View.VISIBLE);
             }
 
-            String burgersAndSandwichesText = mBurgersAndSandwichesText.toString().toUpperCase();
-            if (!burgersAndSandwichesText.isEmpty()) {
+            if (!mBurgersAndSandwichesText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mBurgersAndSandwichesCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mBurgersAndSandwichesTextView.setText(burgersAndSandwichesText);
+                ((MainActivity)mActivityReference.get()).mBurgersAndSandwichesTextView.setText(mBurgersAndSandwichesText);
                 ((MainActivity)mActivityReference.get()).mBurgersAndSandwichesTextView.setVisibility(View.VISIBLE);
             }
 
-            String lunchText = mLunchText.toString().toUpperCase();
-            if (!lunchText.isEmpty()) {
+            if (!mLunchText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mLunchCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mLunchTextView.setText(lunchText);
+                ((MainActivity)mActivityReference.get()).mLunchTextView.setText(mLunchText);
                 ((MainActivity)mActivityReference.get()).mLunchTextView.setVisibility(View.VISIBLE);
             }
 
-            String appetizersText = mAppetizersText.toString().toUpperCase();
-            if (!appetizersText.isEmpty()) {
+            if (!mAppetizersText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mAppetizersCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mAppetizersTextView.setText(appetizersText);
+                ((MainActivity)mActivityReference.get()).mAppetizersTextView.setText(mAppetizersText);
                 ((MainActivity)mActivityReference.get()).mAppetizersTextView.setVisibility(View.VISIBLE);
             }
 
-            String dipsForYourChipsText = mDipsForYourChipsText.toString().toUpperCase();
-            if (!dipsForYourChipsText.isEmpty()) {
+            if (!mDipsForYourChipsText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mDipsForYourChipsCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mDipsForYourChipsTextView.setText(dipsForYourChipsText);
+                ((MainActivity)mActivityReference.get()).mDipsForYourChipsTextView.setText(mDipsForYourChipsText);
                 ((MainActivity)mActivityReference.get()).mDipsForYourChipsTextView.setVisibility(View.VISIBLE);
             }
 
-            String extrasText = mExtrasText.toString().toUpperCase();
-            if (!extrasText.isEmpty()) {
+            if (!mExtrasText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mExtrasCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mExtrasTextView.setText(extrasText);
+                ((MainActivity)mActivityReference.get()).mExtrasTextView.setText(mExtrasText);
                 ((MainActivity)mActivityReference.get()).mExtrasTextView.setVisibility(View.VISIBLE);
             }
 
-            String beveragesText = mBeveragesText.toString().toUpperCase();
-            if (!beveragesText.isEmpty()) {
+            if (!mBeveragesText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mBeveragesCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mBeveragesTextView.setText(beveragesText);
+                ((MainActivity)mActivityReference.get()).mBeveragesTextView.setText(mBeveragesText);
                 ((MainActivity)mActivityReference.get()).mBeveragesTextView.setVisibility(View.VISIBLE);
             }
 
-            String dessertsText = mDessertsText.toString().toUpperCase();
-            if (!dessertsText.isEmpty()) {
+            if (!mDessertsText.isEmpty()) {
                 ((MainActivity)mActivityReference.get()).mDessertsCardView.setVisibility(View.VISIBLE);
-                ((MainActivity)mActivityReference.get()).mDessertsTextView.setText(dessertsText);
+                ((MainActivity)mActivityReference.get()).mDessertsTextView.setText(mDessertsText);
                 ((MainActivity)mActivityReference.get()).mDessertsTextView.setVisibility(View.VISIBLE);
             }
         }
