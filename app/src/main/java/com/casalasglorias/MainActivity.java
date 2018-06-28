@@ -3,11 +3,16 @@ package com.casalasglorias;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -106,6 +111,8 @@ public class MainActivity extends AppCompatActivity
 
     RestaurantMenuData mRestaurantMenuData;
 
+    private NetworkChangeReceiver mNetworkChangeReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,6 +197,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                  mRestaurantMenuData = dataSnapshot.child("public").getValue(RestaurantMenuData.class);
+
+                 if (getSelectedItemId() == R.id.nav_menu) {
+                     mNavigationView.getMenu().performIdentifierAction(R.id.nav_menu, 0);
+                 }
             }
 
             @Override
@@ -198,6 +209,57 @@ public class MainActivity extends AppCompatActivity
                 mRestaurantMenuData = null;
             }
         });
+    }
+
+    public class NetworkChangeReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            isNetworkAvailable(context);
+        }
+
+        private void isNetworkAvailable(Context context) {
+            ConnectivityManager connectivity = (ConnectivityManager)
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivity != null) {
+                NetworkInfo networkInfo = connectivity.getActiveNetworkInfo();
+                if (networkInfo != null) {
+                    if (networkInfo.isConnected()) {
+                        mNavigationView.getMenu().performIdentifierAction(getSelectedItemId(), 0);
+                    }
+                }
+            }
+        }
+    }
+
+    private int getSelectedItemId() {
+        Menu menu = mNavigationView.getMenu();
+
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            if (menuItem.isChecked()) {
+                return menuItem.getItemId();
+            }
+        }
+
+        return -1;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        mNetworkChangeReceiver = new NetworkChangeReceiver();
+        registerReceiver(mNetworkChangeReceiver, filter);
+        mNetworkChangeReceiver.isNetworkAvailable(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(mNetworkChangeReceiver);
     }
 
     private void updateFab() {
