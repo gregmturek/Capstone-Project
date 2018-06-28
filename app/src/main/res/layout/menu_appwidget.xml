@@ -42,10 +42,26 @@
         android:layout_marginBottom="@dimen/widget_divider_margin_bottom"
         android:contentDescription="@string/content_description_divider" />
 
-    <ImageView
-        android:id="@+id/widget_image"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/content_description_section_of_menu" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/padding"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:text="@string/content_description_section_of_menu"
+            style="@style/TextAppearance.AppCompat.Subhead.Inverse"/>
+
+        <ImageView
+            android:id="@+id/widget_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_section_of_menu" />
+
+    </FrameLayout>
+
 
 </LinearLayout>

@@ -45,6 +45,14 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_salads"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,6 +87,14 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_enchiladas"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -115,6 +131,14 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_burritos_and_wraps"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -149,6 +173,14 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_fajitas_and_steaks"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -185,6 +217,14 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_specialties"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -219,6 +259,14 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_mariscos"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -255,6 +303,14 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_combinations"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -289,6 +345,14 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_chimichangas"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -325,6 +389,14 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_quesadillas"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -359,6 +431,14 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_pepes_platters"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -395,6 +475,14 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_burgers_and_sandwiches"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -429,6 +517,14 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_lunch"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -465,6 +561,14 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_appetizers"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -499,6 +603,14 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_dips_for_your_chips"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -535,6 +647,14 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_extras"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -570,6 +690,14 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_beverages"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -604,6 +732,14 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding"
+                    android:textAlignment="center"
+                    android:text="@string/content_description_desserts"
+                    style="@style/TextAppearance.AppCompat.Subhead"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

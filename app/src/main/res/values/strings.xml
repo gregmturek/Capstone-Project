@@ -73,25 +73,25 @@
     <string name="dialog_search_error_invalid_keyword">"Sorry, you can\'t search for that!"</string>
     <string name="dialog_search_error_no_category">"Did you forget to pick a category?"</string>
 
-    <string name="content_description_salads">salads section of menu</string>
-    <string name="content_description_enchiladas">enchiladas section of menu</string>
-    <string name="content_description_burritos_and_wraps">burritos and wraps section of menu</string>
-    <string name="content_description_fajitas_and_steaks">fajitas and steaks section of menu</string>
-    <string name="content_description_specialties">specialties section of menu</string>
-    <string name="content_description_mariscos">mariscos section of menu</string>
-    <string name="content_description_combinations">combinations section of menu</string>
-    <string name="content_description_chimichangas">chimichangas section of menu</string>
-    <string name="content_description_quesadillas">quesadillas section of menu</string>
-    <string name="content_description_pepes_platters">pepe\'s platters section of menu</string>
-    <string name="content_description_burgers_and_sandwiches">burgers and sandwiches section of menu</string>
-    <string name="content_description_lunch">lunch section of menu</string>
-    <string name="content_description_appetizers">appetizers section of menu</string>
-    <string name="content_description_dips_for_your_chips">dips for your chips section of menu</string>
-    <string name="content_description_extras">extras section of menu</string>
-    <string name="content_description_beverages">beverages section of menu</string>
-    <string name="content_description_desserts">desserts section of menu</string>
+    <string name="content_description_salads">Salads Section of Menu</string>
+    <string name="content_description_enchiladas">Enchiladas Section of Menu</string>
+    <string name="content_description_burritos_and_wraps">Burritos and Wraps Section of Menu</string>
+    <string name="content_description_fajitas_and_steaks">Fajitas and Steaks Section of Menu</string>
+    <string name="content_description_specialties">Specialties Section of Menu</string>
+    <string name="content_description_mariscos">Mariscos Section of Menu</string>
+    <string name="content_description_combinations">Combinations Section of Menu</string>
+    <string name="content_description_chimichangas">Chimichangas Section of Menu</string>
+    <string name="content_description_quesadillas">Quesadillas Section of Menu</string>
+    <string name="content_description_pepes_platters">Pepe\'s Platters Section of Menu</string>
+    <string name="content_description_burgers_and_sandwiches">Burgers and Sandwiches Section of Menu</string>
+    <string name="content_description_lunch">Lunch Section of Menu</string>
+    <string name="content_description_appetizers">Appetizers Section of Menu</string>
+    <string name="content_description_dips_for_your_chips">Dips For Your Chips Section of Menu</string>
+    <string name="content_description_extras">Extras Section of Menu</string>
+    <string name="content_description_beverages">Beverages Section of Menu</string>
+    <string name="content_description_desserts">Desserts Section of Menu</string>
     <string name="content_description_divider">divider</string>
-    <string name="content_description_section_of_menu">section of menu</string>
+    <string name="content_description_section_of_menu">Section of Menu</string>
 
     <string name="widget_button_text">Change</string>
 </resources>

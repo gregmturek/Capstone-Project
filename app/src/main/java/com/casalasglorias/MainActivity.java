@@ -788,6 +788,7 @@ public class MainActivity extends AppCompatActivity
         Uri uri = user.getPhotoUrl();
         GlideApp.with(this)
                 .load(uri)
+                .error(R.drawable.ic_account_circle_black_24dp)
                 .into(mNavHeaderImageImageView);
 
         mNavHeaderNameTextView.setText(user.getDisplayName());
