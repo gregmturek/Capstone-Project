@@ -679,6 +679,7 @@ public class MainActivity extends AppCompatActivity
         FusedLocationProviderClient fusedLocationProviderClient =
                 LocationServices.getFusedLocationProviderClient(this);
         mapFragment.getMapAsync(googleMap -> {
+            googleMap.clear();
             if (locationPermission) {
                 @SuppressLint("MissingPermission") Task<Location> task = fusedLocationProviderClient.
                         getLastLocation();
