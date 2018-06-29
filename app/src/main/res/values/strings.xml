@@ -8,7 +8,7 @@
     <string name="action_dial">Call</string>
     <string name="action_place">Locate</string>
     <string name="dialog_search_message">What sounds good?</string>
-    <string name="hint_keyword">shrimp, cheese, guacamole, ...</string>
+    <string name="hint_keyword">shrimp, cheese, guacamole, …</string>
     <string name="dialog_search_title">Search</string>
     <string name="button_search">OK</string>
     <string name="button_cancel">Cancel</string>
@@ -94,4 +94,10 @@
     <string name="content_description_section_of_menu">Section of Menu</string>
 
     <string name="widget_button_text">Change</string>
+
+    <string name="navigation_menu_title_home">Home</string>
+    <string name="navigation_menu_title_menu">Menu</string>
+    <string name="navigation_menu_title_catering">Catering</string>
+    <string name="navigation_menu_title_find">Find Us</string>
+    <string name="navigation_menu_title_account">Account</string>
 </resources>
